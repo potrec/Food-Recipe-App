@@ -138,6 +138,31 @@ body{
 .recipe-btn:hover{
     background: var(--tenne-tawny-dark);
 }
+.favorite-btn{
+    text-decoration: none;
+    color: #fff;
+    background: goldenrod;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.75rem 0;
+    display: block;
+    width: 175px;
+    margin: 1rem auto;
+    border-radius: 2rem;
+    -webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    -ms-border-radius: 2rem;
+    -o-border-radius: 2rem;
+    transition: all 0.4s linear;
+    -webkit-transition: all 0.4s linear;
+    -moz-transition: all 0.4s linear;
+    -ms-transition: all 0.4s linear;
+    -o-transition: all 0.4s linear;
+}
+.favorite-btn:hover{
+    background: chocolate;
+}
+
 
 /* meal details */
 .meal-details{
@@ -387,4 +412,35 @@ a:hover{
         cursor: pointer;
         float: right;
 
+    }
+
+    .alert{
+        background-color: var(--tenne-tawny);
+        border: none;
+        padding: 18px 25px;
+        border-radius: 16px;
+        color: white;
+        text-shadow: rgba(0, 0, 0, 0.42) 0px 0px 21px;
+        font-size: 30px;
+        color: white;
+        cursor: pointer;
+        float: right;
+    }
+    .alert button{
+        right: 2rem;
+        top: 2rem;
+        font-size: 1.8rem;
+        background: #fff;
+        border: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.9;
     }

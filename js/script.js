@@ -2,13 +2,14 @@ const searchBtn = document.getElementById('search-btn');
 const mealList = document.getElementById('meal');
 const mealDetailsContent = document.querySelector('.meal-details-content');
 const recipeCloseBtn = document.getElementById('recipe-close-btn');
-
+const favoriteBtn = document.getElementById('favorite-btn');
 // event listeners
 searchBtn.addEventListener('click', getMealList);
 mealList.addEventListener('click', getMealRecipe);
 recipeCloseBtn.addEventListener('click', () => {
     mealDetailsContent.parentElement.classList.remove('showRecipe');
 });
+favoriteBtn.addEventListener('click', getFavoriteMeal);
 
 
 // get meal list that matches with the ingredients
@@ -18,7 +19,6 @@ function getMealList(){
     .then(response => response.json())
     .then(data => {
         let html = "";
-        let searchlist = "";
         if(data.meals){
             data.meals.forEach(meal => {
                 html += `
@@ -28,14 +28,13 @@ function getMealList(){
                         </div>
                         <div class = "meal-name">
                             <h3>${meal.strMeal}</h3>
+                            <a href = "#" class = "favorite-btn">Add to favorite</a>
                             <a href = "#" class = "recipe-btn">Get Recipe</a>
                         </div>
                     </div>
                 `;
-                searchlist += ``;
             });
             mealList.classList.remove('notFound');
-            localStorage.setItem('mealList', JSON.stringify(data.meals));
         } else{
             html = "Sorry, we didn't find any meal!";
             mealList.classList.add('notFound');
@@ -77,4 +76,8 @@ function mealRecipeModal(meal){
     `;
     mealDetailsContent.innerHTML = html;
     mealDetailsContent.parentElement.classList.add('showRecipe');
+}
+
+function getFavoriteMeal(){
+    console.log();
 }
