@@ -1,6 +1,10 @@
+// Import Classes
+import { UI } from './ui.js';
+import { MealAPI } from './mealAPI.js';
+
 // Instanciate the Classes
-import { UI } from './ui.js';       
 const ui = new UI();
+const meal = new MealAPI();
 
 
 // Create the Event Listeners
@@ -27,6 +31,15 @@ function getMeals(e){
         //Show error message
         ui.printMessage('Please add something into the form', 'danger');
     }else{
-        console.log('Query the REST API');
+        // Query by the name of the meal
+        meal.getMealByName(searchTerm)
+        .then(meals => {
+            if(meals.meals.meals === null){
+                //No meals found
+                ui.printMessage('No meals found', 'danger');
+            } else{
+                ui.displayMealsWithIngredients(meals.meals.meals);
+            }
+        })
     }
 }
