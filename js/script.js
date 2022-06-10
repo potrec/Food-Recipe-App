@@ -18,6 +18,7 @@ function getMealList(){
     .then(response => response.json())
     .then(data => {
         let html = "";
+        let searchlist = "";
         if(data.meals){
             data.meals.forEach(meal => {
                 html += `
@@ -31,6 +32,7 @@ function getMealList(){
                         </div>
                     </div>
                 `;
+                searchlist += ``;
             });
             mealList.classList.remove('notFound');
             localStorage.setItem('mealList', JSON.stringify(data.meals));
