@@ -4,12 +4,21 @@ const mealDetailsContent = document.querySelector('.meal-details-content');
 const recipeCloseBtn = document.getElementById('recipe-close-btn');
 const favoriteBtn = document.getElementById('favorite-btn');
 // event listeners
-searchBtn.addEventListener('click', getMealList);
-mealList.addEventListener('click', getMealRecipe);
+if(searchBtn){
+    searchBtn.addEventListener('click', getMealList);
+}
+if(mealList){
+    mealList.addEventListener('click', getMealRecipe);
+}
+
 recipeCloseBtn.addEventListener('click', () => {
     mealDetailsContent.parentElement.classList.remove('showRecipe');
 });
-favoriteBtn.addEventListener('click', getFavoriteMeal);
+
+if(favoriteBtn){
+    favoriteBtn.addEventListener('click', getFavoriteMeal);
+}
+document.addEventListener('DOMContentLoaded', documentReady);
 
 
 // get meal list that matches with the ingredients
@@ -28,7 +37,27 @@ function getMealList(){
                         </div>
                         <div class = "meal-name">
                             <h3>${meal.strMeal}</h3>
-                            <a href = "#" class = "favorite-btn">Add to favorite</a>
+                        `
+                        let isFavorite = JSON.parse(localStorage.getItem('meal'));
+                        let found = false;
+                        if(isFavorite){
+                        isFavorite.forEach(element=>{
+                            if(element.idMeal === meal.idMeal){
+                            found=true;   
+                            }                           
+                        })
+                        }
+                        if(found){
+                            html +=`
+                            <a href = "#" class = "remove-btn" id="${meal.idMeal}" data-id = "${meal.idMeal}">Remove from favorite</a>
+                            `
+                        }
+                        else{
+                            html +=`
+                            <a href = "#" class = "favorite-btn" id="${meal.idMeal}" data-id = "${meal.idMeal}">Add to favorite</a>
+                            `
+                        }
+                html +=`
                             <a href = "#" class = "recipe-btn">Get Recipe</a>
                         </div>
                     </div>
@@ -41,6 +70,8 @@ function getMealList(){
         }
 
         mealList.innerHTML = html;
+        initializeRemoveBtn();
+
     });
 }
 
@@ -53,6 +84,28 @@ function getMealRecipe(e){
         fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
         .then(response => response.json())
         .then(data => mealRecipeModal(data.meals));
+    }
+    if(e.target.classList.contains('favorite-btn')){
+        if(e.target.classList.contains('is-favorite')){
+            // remove from favorite
+            e.target.classList.remove('is-favorite');
+        }
+        else{
+            // add to favorite
+            e.target.classList.add('is-favorite');
+
+            // Get info
+            const cardBody = e.target.parentElement.parentElement;
+
+            const mealInfo = {
+                idMeal: cardBody.dataset.id,
+                name: cardBody.querySelector('.meal-name h3').textContent,
+                image: cardBody.querySelector('.meal-img img').src,
+            }
+            console.log(mealInfo);
+            // Add into the storage
+            saveIntoDB(mealInfo);
+        }
     }
 }
 
@@ -78,6 +131,96 @@ function mealRecipeModal(meal){
     mealDetailsContent.parentElement.classList.add('showRecipe');
 }
 
+// Save the recipes into local storage
+function saveIntoDB(meal){
+    const meals = getFromDB();
+
+    meals.push(meal);
+
+    // Add the new array into local storage
+    localStorage.setItem('meal', JSON.stringify(meals));
+}
+// Return recipes from storage
+function getFromDB(){
+    let meal;
+
+    if(localStorage.getItem('meal') === null){
+        meal = [];
+    } else
+    {
+        meal = JSON.parse(localStorage.getItem('meal'));
+    }
+    return meal
+}
+
 function getFavoriteMeal(){
     console.log();
 }
+// Document ready
+function documentReady(){
+   // When favorites page is loaded, get the recipes from local storage
+   const favoriteTable = document.getElementById('favorites');
+   if(favoriteTable){
+    // Get the recipes from local storage
+    const meals = getFromDB();
+    // console.log(meals);
+    // Display the recipes
+    displayFavorite(meals);
+    favoriteTable.addEventListener('click', (e)=>{
+        // e.preventDefault();
+        if(e.target.classList.contains('recipe-btn')){
+            let mealItem = e.target.parentElement.parentElement;
+                fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.id}`)
+                .then(response => response.json())
+                .then(data => mealRecipeModal(data.meals));
+        }
+    })
+
+   }
+   initializeRemoveBtn();
+}
+function initializeRemoveBtn(){
+    const removeBtn = document.getElementsByClassName('remove-btn');
+    if(removeBtn){
+        for(let i = 0; i < removeBtn.length; i++){
+            let element = removeBtn[i];
+            element.addEventListener('click', () => {
+                let mealList = localStorage.getItem('meal');
+                mealList = JSON.parse(mealList);
+                mealList = mealList.filter(meal => meal.idMeal != element.id);
+                // console.log(meal.idMeal);
+                console.log(element.id);
+                localStorage.setItem('meal', JSON.stringify(mealList));
+                if(window.location.href.includes('favorite')){
+                document.getElementById(element.id).remove();
+                }    
+            })
+        }
+        
+    }
+}
+
+
+// Display favorite meal
+function displayFavorite(favorites){
+    const favoriteTable = document.getElementById('favorites');
+    favorites.forEach(meal=>{
+        const tr = document.createElement('tr');
+            tr.innerHTML += `
+                <td>
+                    <img src = "${meal.image}" alt = "${meal.name}">
+                </td>
+                <td>${meal.name}</td>
+                <td>
+                <div class = "recipe-btn">Get Recipe</div>
+                </td>
+                <td>
+                <div id="${meal.idMeal}" class = "remove-btn">Remove</div>
+                </td>
+            `;
+            tr.setAttribute('id', meal.idMeal);
+            
+            favoriteTable.appendChild(tr);
+        });
+}
+

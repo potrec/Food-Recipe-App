@@ -134,6 +134,7 @@ body{
     -moz-transition: all 0.4s linear;
     -ms-transition: all 0.4s linear;
     -o-transition: all 0.4s linear;
+    cursor: pointer;
 }
 .recipe-btn:hover{
     background: var(--tenne-tawny-dark);
@@ -443,4 +444,29 @@ a:hover{
         align-items: center;
         justify-content: center;
         opacity: 0.9;
+    }
+    .is-favorite{
+        background: var(--tenne-tawny-dark);
+    }
+    .remove-btn{
+        text-decoration: none;
+        color: #fff;
+        background: red;
+        font-weight: 500;
+        font-size: 1.1rem;
+        padding: 0.75rem 0;
+        display: block;
+        width: 175px;
+        margin: 1rem auto;
+        border-radius: 2rem;
+        -webkit-border-radius: 2rem;
+        -moz-border-radius: 2rem;
+        -ms-border-radius: 2rem;
+        -o-border-radius: 2rem;
+        transition: all 0.4s linear;
+        -webkit-transition: all 0.4s linear;
+        -moz-transition: all 0.4s linear;
+        -ms-transition: all 0.4s linear;
+        -o-transition: all 0.4s linear;
+        cursor: pointer;
     }

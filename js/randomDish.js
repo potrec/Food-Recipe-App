@@ -24,6 +24,7 @@ function getMealList(){
                             </div>
                             <div class = "meal-name">
                                 <h3>${meal.strMeal}</h3>
+                                <a href = "#" class = "favorite-btn" data-id = "${meal.idMeal}">Add to favorite</a>
                                 <a href = "#" class = "recipe-btn">Get Recipe</a>
                             </div>
                         </div>
@@ -45,6 +46,10 @@ function getMealRecipe(e){
         fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
         .then(response => response.json())
         .then(data => mealRecipeModal(data.meals));
+    }
+    //When favorite button is clicked
+    if(e.target.classList.contains('favorite-btn')){
+        console.log('favorite');
     }
 }
 function mealRecipeModal(meal){

@@ -8,7 +8,7 @@ export class UI {
         // Insert the results
         const resultsDiv = document.querySelector('.meal-result');
 
-        meals.forEach(drink => {
+        meals.forEach(meal => {
             resultsDiv.innerHTML += `
                 <div class = "meal-item" data-id = "${meal.idMeal}">
                     <div class = "meal-img">
@@ -47,5 +47,35 @@ export class UI {
 
         }, 3000);
     }
-
+    // get recipe of the meal
+    getMealRecipe(e){
+        console.log(meals);
+        e.preventDefault();
+        if(e.target.classList.contains('recipe-btn')){
+            let mealItem = e.target.parentElement.parentElement;
+            fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
+            .then(response => response.json())
+            .then(meals => mealRecipeModal(meals.meals.meals));}
+    }
+    // Create a modal
+    mealRecipeModal(meals){
+        console.log(meals);
+        meals = meals[0];
+        let html = `
+            <h2 class = "recipe-title">${meals.strMeal}</h2>
+            <p class = "recipe-category">${meals.strCategory}</p>
+            <div class = "recipe-instruct">
+                <h3>Instructions:</h3>
+                <p>${meals.strInstructions}</p>
+            </div>
+            <div class = "recipe-meal-img">
+                <img src = "${meals.strMealThumb}" alt = "">
+            </div>
+            <div class = "recipe-link">
+                <a href = "${meals.strYoutube}" target = "_blank">Watch Video</a>
+            </div>
+        `;
+        mealDetailsContent.innerHTML = html;
+        mealDetailsContent.parentElement.classList.add('showRecipe');
+    }
 }   

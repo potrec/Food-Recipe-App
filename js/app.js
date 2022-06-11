@@ -5,7 +5,8 @@ import { MealAPI } from './mealAPI.js';
 // Instanciate the Classes
 const ui = new UI();
 const meal = new MealAPI();
-
+const mealDetailsContent = document.querySelector('.meal-details-content');
+const recipeCloseBtn = document.getElementById('recipe-close-btn');
 
 // Create the Event Listeners
 function eventListeners(){
@@ -17,6 +18,9 @@ function eventListeners(){
     }
     
 }
+recipeCloseBtn.addEventListener('click', () => {
+    mealDetailsContent.parentElement.classList.remove('showRecipe');
+});
 
 eventListeners();
 
