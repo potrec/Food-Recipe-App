@@ -88,6 +88,28 @@ function getMealRecipe(e){
     if(e.target.classList.contains('favorite-btn')){
         if(e.target.classList.contains('is-favorite')){
             // remove from favorite
+            
+            // remove from local storage 
+            function initializeRemove(){
+                const remove = document.getElementsByClassName('is-favorite');
+                if(remove){
+                    for(let i = 0; i < remove.length; i++){
+                        let element = remove[i];
+                        element.addEventListener('click', () => {
+                            let mealList = localStorage.getItem('meal');
+                            mealList = JSON.parse(mealList);
+                            mealList = mealList.filter(meal => meal.idMeal != element.id);
+                            console.log(element.id);
+                            localStorage.setItem('meal', JSON.stringify(mealList));
+                            if(window.location.href.includes('favorite')){
+                            document.getElementById(element.id).remove();
+                            }    
+                        })
+                    }
+                    
+                }
+            }
+            initializeRemove();
             e.target.classList.remove('is-favorite');
         }
         else{
@@ -104,6 +126,7 @@ function getMealRecipe(e){
             }
             console.log(mealInfo);
             // Add into the storage
+            
             saveIntoDB(mealInfo);
         }
     }
@@ -188,7 +211,6 @@ function initializeRemoveBtn(){
                 let mealList = localStorage.getItem('meal');
                 mealList = JSON.parse(mealList);
                 mealList = mealList.filter(meal => meal.idMeal != element.id);
-                // console.log(meal.idMeal);
                 console.log(element.id);
                 localStorage.setItem('meal', JSON.stringify(mealList));
                 if(window.location.href.includes('favorite')){
