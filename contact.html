@@ -15,34 +15,36 @@
         </label>
         <label class="logo">POTREC</label>
         <ul>  
-            <li><a class="active" href="index.html">Find Meal By Your Ingredients</a></li> 
+            <li><a class="active" href="index.html">Find Meal By Your Ingredients</a></li>
+            <li><a class="active" href="random.html">Get The Random Meal</a></li>
             <li><a class="active" href="favorite.html">Favorite Meals</a></li>
             <li><a class="active" href="contact.html">Contact Me</a></li>
         </ul>
     </nav>
     <div class="container">
         <!-- contact form -->
-        <form>
+        <form onsubmit="event.preventDefault(); validateForm();">
             <h1>Contact me</h1>
             
             <label for="name">Name</label>
             <input type="text" id="name" name="name" placeholder="Your name..">
-            <small class="error">Please enter your name</small>
+            <small class="error"></small>
 
             <label for="email">Email</label>
             <input type="text" id="email" name="email" placeholder="Your email..">
-            <small class="error">Please enter your email</small>
+            <small class="error"></small>
 
             <label for="message">Message</label>
             <textarea id="message" name="message" placeholder="Your message.." style="height:200px"></textarea>
-            <small class="error">Please enter your message</small>
+            <small class="error"></small>
 
             <div class="center">
                 <input type="submit" value="Send Message">
-                <p id="success">Message sent successfully</p>
+                <p id="success"></p>
             </div>
 
         </form>
     </div>    
 </body>
+<script src="js/validation.js"></script>
 </html>

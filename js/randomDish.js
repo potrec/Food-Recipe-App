@@ -24,7 +24,6 @@ function getMealList(){
                             </div>
                             <div class = "meal-name">
                                 <h3>${meal.strMeal}</h3>
-                                <a href = "#" class = "favorite-btn" data-id = "${meal.idMeal}">Add to favorite</a>
                                 <a href = "#" class = "recipe-btn">Get Recipe</a>
                             </div>
                         </div>
