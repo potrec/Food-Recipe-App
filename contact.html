@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Meal For Your Ingredients</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+  <link rel = "stylesheet" href = "css/style.css">
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <label class="logo">POTREC</label>
+        <ul>  
+            <li><a class="active" href="index.html">Find Meal By Your Ingredients</a></li> 
+            <li><a class="active" href="favorite.html">Favorite Meals</a></li>
+            <li><a class="active" href="contact.html">Contact Me</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <!-- contact form -->
+        <form>
+            <h1>Contact me</h1>
+            
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name..">
+            <small class="error">Please enter your name</small>
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Your email..">
+            <small class="error">Please enter your email</small>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your message.." style="height:200px"></textarea>
+            <small class="error">Please enter your message</small>
+
+            <div class="center">
+                <input type="submit" value="Send Message">
+                <p id="success">Message sent successfully</p>
+            </div>
+
+        </form>
+    </div>    
+</body>
+</html>
